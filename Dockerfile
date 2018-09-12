@@ -3,6 +3,7 @@ MAINTAINER thebeeman "https://github.com/TheBeeMan"
 
 RUN apt-get update
 RUN apt-get install -y man apt-file git vim curl wget python python3 python-pip python3-pip tmux openssh-server
+RUN apt-get install -y net-tools iproute2
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' |chpasswd
 RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
