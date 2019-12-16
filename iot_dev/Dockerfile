@@ -50,13 +50,6 @@ RUN git clone https://github.com/devttys0/binwalk /root/private/tools/binwalk \
     && cd /root/private/tools/binwalk \
     && python setup.py install
  
-## Install american-fuzzy-lop
-#RUN wget --quiet http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz -O /root/private/tools/afl-latest.tgz \
-#    && cd /root/private/tools/ \
-#    && tar -xzvf afl-latest.tgz \
-#    && rm afl-latest.tgz \
-#    && (cd afl-*;make;(cd llvm_mode;make);make install)
-
 ## Install angr
 #RUN git clone https://github.com/angr/angr-dev /root/private/ctf/tools/angr-dev \
 #    && cd /root/private/ctf/tools/angr-dev \
