@@ -4,7 +4,7 @@ MAINTAINER thebeeman "https://github.com/TheBeeMan"
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
 
 ## Change apt package source address to aliyun platform
-echo -e "deb https://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse \n"\
+RUN echo -e "deb https://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse \n"\
     "deb https://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse \n"\
     "deb https://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse \n"\
     "deb https://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse \n"\
