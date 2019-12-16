@@ -1,2 +1,2 @@
-# docker-image-ubuntu18.04
-Docker file for the latest ubuntu distribution 18.04 with ssh service enabled.
+# docker-custom-images
+A brunch of custom docker images used for daily development or maintenance, and including penetration test as well.
