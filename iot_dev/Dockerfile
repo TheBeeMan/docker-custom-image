@@ -1,24 +1,29 @@
 FROM       ubuntu:18.04
 MAINTAINER thebeeman "https://github.com/TheBeeMan"
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
 
 ## Change apt package source address to aliyun platform
-RUN echo -e "deb https://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse \n"\
-    "deb https://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse \n"\
-    "deb https://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse \n"\
-    "deb https://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse \n"\
-    "deb https://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse \n"\
-    "\n"\
-    "# deb-src https://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse \n"\
-    "# deb-src https://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse \n"\
-    "# deb-src https://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse \n"\
-    "# deb-src https://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse \n"\
-    "# deb-src https://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse \n" > /etc/apt/sources.list
+RUN echo "deb http://mirrors.ustc.edu.cn/ubuntu bionic main restricted universe multiverse" | tee /etc/apt/sources.list
+RUN echo "deb http://mirrors.ustc.edu.cn/ubuntu bionic-security main restricted universe multiverse" | tee -a /etc/apt/sources.list
+RUN echo "deb http://mirrors.ustc.edu.cn/ubuntu bionic-updates main restricted universe multiverse" | tee -a /etc/apt/sources.list
+RUN echo "deb http://mirrors.ustc.edu.cn/ubuntu bionic-proposed main restricted universe multiverse" | tee -a /etc/apt/sources.list
+RUN echo "deb http://mirrors.ustc.edu.cn/ubuntu bionic-backports main restricted universe multiverse" | tee -a /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.ustc.edu.cn/ubuntu bionic main restricted universe multiverse" | tee -a /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.ustc.edu.cn/ubuntu bionic-security main restricted universe multiverse" | tee -a /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.ustc.edu.cn/ubuntu bionic-updates main restricted universe multiverse" | tee -a /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.ustc.edu.cn/ubuntu bionic-proposed main restricted universe multiverse" | tee -a /etc/apt/sources.list
+RUN echo "deb-src http://mirrors.ustc.edu.cn/ubuntu bionic-backports main restricted universe multiverse" | tee -a /etc/apt/sources.list
 
-RUN apt-get update
-RUN apt-get install -y man apt-file git vim curl wget python python3 python-pip python3-pip tmux openssh-server build-essential
-RUN apt-get install -y net-tools iproute2
+## Install essential components
+RUN apt-get update -y \ 
+	&& apt-get install -y apt-utils man apt-file git vim curl wget python python3 python-pip python3-pip \
+	&& apt-get install -y tmux openssh-server build-essential \
+	&& apt-get install -y net-tools iproute2 \
+	&& apt-get install -y clang llvm-dev
+
 RUN mkdir /var/run/sshd
 RUN echo 'root:passwd-must-modify' | chpasswd
 RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
@@ -29,44 +34,39 @@ RUN apt-get clean && \
 RUN git clone --depth=1 git://github.com/amix/vimrc.git ~/.vim_runtime
 RUN sh ~/.vim_runtime/install_basic_vimrc.sh
 
+# Create fequently use directory
+RUN mkdir /root/workspace /root/private
+
 ## Install zsh and change it for terminal in default
-RUN apt-get install -y zsh
+RUN apt-get update -y && apt-get install -y zsh \
+	&& apt-get install -y autojump 
 RUN chsh -s /bin/zsh
-RUN git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-RUN ~/.oh-my-zsh/tools/install.sh
+RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 RUN git clone git://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
 RUN git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
-RUN apt-get install autojump
 
-## Install radare2
-RUN git clone https://github.com/radare/radare2 /home/soh0ro0t/tools/radare2 \
-    && cd /root/private/ctf/tools/radare2 \
-    && ./sys/install.sh
-    
-## Install binwalk
-RUN git clone https://github.com/devttys0/binwalk /home/soh0ro0t/tools/binwalk \
-    && cd /root/private/ctf/tools/binwalk \
+# Install binwalk
+RUN git clone https://github.com/devttys0/binwalk /root/private/tools/binwalk \
+    && cd /root/private/tools/binwalk \
     && python setup.py install
  
 ## Install american-fuzzy-lop
-RUN wget --quiet http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz -O /root/private/ctf/tools/afl-latest.tgz \
-    && cd /home/soh0ro0t/tools/ \
-    && tar -xzvf afl-latest.tgz \
-    && rm afl-latest.tgz \
-    && (cd afl-*;make;(cd llvm_mode;make);make install)
+#RUN wget --quiet http://lcamtuf.coredump.cx/afl/releases/afl-latest.tgz -O /root/private/tools/afl-latest.tgz \
+#    && cd /root/private/tools/ \
+#    && tar -xzvf afl-latest.tgz \
+#    && rm afl-latest.tgz \
+#    && (cd afl-*;make;(cd llvm_mode;make);make install)
 
 ## Install angr
 #RUN git clone https://github.com/angr/angr-dev /root/private/ctf/tools/angr-dev \
 #    && cd /root/private/ctf/tools/angr-dev \
 #    && ./setup.sh -i -e angr
-RUN pip2 install angr
+RUN pip2 install -i https://pypi.tuna.tsinghua.edu.cn/simple angr
 
 ## Install ROPGadget
 RUN git clone https://github.com/JonathanSalwan/ROPgadget /root/private/ctf/tools/ROPgadget \
     && cd /root/private/ctf/tools/ROPgadget \
     && python setup.py install
-
-RUN mkdir /root/workspace /root/private
 
 EXPOSE 22
 CMD    ["/usr/sbin/sshd", "-D"]
