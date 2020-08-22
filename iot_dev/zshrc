@@ -83,7 +83,7 @@ bindkey "^F" forward-word
 bindkey "^B" backward-word
 
 export rsync_sample="rsync -avzP --inplace --rsh='ssh  -i ~/.ssh/xxx'  \
-	thebeemangg@255.255.255.255:/home/thebeemangg/zsrc/tools/ ."
+	soh0ro0t@255.255.255.255:/home/soh0ro0t/zsrc/tools/ ."
 export git_ssl_no_verify="true"
 
 autoload -U compinit && compinit -u
