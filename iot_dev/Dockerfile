@@ -1,8 +1,13 @@
 FROM       ubuntu:18.04
-MAINTAINER thebeeman "https://github.com/TheBeeMan"
+MAINTAINER thebeeman "https://github.com/soh0ro0t"
 
 ENV DEBIAN_FRONTEND noninteractive
 
+copy zshrc /root/.zshrc
+
+copy .vimrc /root/.vimrc
+
+## Backup original apt source 
 RUN mv /etc/apt/sources.list /etc/apt/sources.list.bak
 
 ## Change apt package source address to aliyun platform
