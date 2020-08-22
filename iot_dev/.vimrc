@@ -3,6 +3,7 @@ syntax on
 
 let mapleader = ","
 
+set paste
 set nocompatible
 set rtp+=~/.vim/bundle/Vundle.vim
 
