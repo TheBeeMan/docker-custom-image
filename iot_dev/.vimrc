@@ -124,7 +124,7 @@ map <F5> :!cscope -Rb<CR>:cs reset<CR><CR>
 
 " =======================================
 " zle plugin configuration
-nmap <F3> :ALEToggle<CR>
+nmap <F4> :ALEToggle<CR>
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}\ %{ALEGetStatusLine()}
 " Always enable sign column
 let g:ale_sign_column_always = 1
