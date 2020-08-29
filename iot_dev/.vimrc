@@ -76,6 +76,7 @@ let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let Tlist_WinWidt=25
 
+" =======================================
 " To change the default keys of vim-bookmark
 nmap <Leader><Leader> <Plug>BookmarkToggle
 nmap <S-i> <Plug>BookmarkAnnotate
