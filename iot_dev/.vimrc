@@ -68,7 +68,7 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 "
-
+" =======================================
 " taglist plugin configures F3 hotkey
 map <F3> :TlistToggle<CR>
 let Tlist_Use_Right_Window=1
