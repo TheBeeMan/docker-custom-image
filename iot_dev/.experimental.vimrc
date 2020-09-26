@@ -93,6 +93,20 @@ nmap <Leader>q :NERDTreeFind %<CR>
 	map <F5> :!cscope -Rb<CR>:cs reset<CR><CR>
 
 " =======================================
+" Plugin 'MattesGroeger/vim-bookmarks' configuration
+        nmap <Leader><Leader> <Plug>BookmarkToggle
+        nmap <S-i> <Plug>BookmarkAnnotate
+        nmap <S-l> <Plug>BookmarkShowAll
+"       nmap <S>j <Plug>BookmarkNext
+"       nmap <S>k <Plug>BookmarkPrev
+        nmap <S-c> <Plug>BookmarkClear
+"       nmap <S>x <Plug>BookmarkClearAll
+        nmap <S-x> <Plug>BookmarkClearAll
+"       nmap <S>kk <Plug>BookmarkMoveUp
+"       nmap <S>jj <Plug>BookmarkMoveDown
+"       nmap <S>g <Plug>BookmarkMoveToLine
+
+" =======================================
 " Plugin 'SirVer/ultisnips' configuration
 	" Trigger configuration. Do not use <tab> if you use 
 	" https://github.com/Valloric/YouCompleteMe.
