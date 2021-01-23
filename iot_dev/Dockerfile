@@ -3,6 +3,8 @@ MAINTAINER thebeeman "https://github.com/soh0ro0t"
 
 ENV DEBIAN_FRONTEND noninteractive
 
+ENV LC_ALL en_US.UTF-8
+
 copy zshrc /root/.zshrc
 
 copy .vimrc /root/.vimrc
